@@ -1,0 +1,111 @@
+236           0 RESUME                   0
+
+237           2 LOAD_FAST                1 (parsed)
+              4 LOAD_ATTR                0 (path)
+             14 LOAD_CONST               1 ('/api/status')
+             16 COMPARE_OP               2 (==)
+             22 POP_JUMP_FORWARD_IF_FALSE    77 (to 178)
+
+238          24 LOAD_GLOBAL              2 (CURRENT_SESSION)
+             36 LOAD_CONST               2 ('raw_df')
+             38 BINARY_SUBSCR
+             48 LOAD_CONST               0 (None)
+             50 IS_OP                    1
+             52 STORE_FAST               2 (has_raw)
+
+239          54 LOAD_FAST                0 (self)
+             56 LOAD_METHOD              2 (send_json)
+
+240          78 LOAD_CONST               3 ('ready')
+
+241          80 LOAD_GLOBAL              2 (CURRENT_SESSION)
+             92 LOAD_CONST               4 ('filename')
+             94 BINARY_SUBSCR
+
+242         104 LOAD_GLOBAL              2 (CURRENT_SESSION)
+            116 LOAD_CONST               5 ('business')
+            118 BINARY_SUBSCR
+
+243         128 LOAD_FAST                2 (has_raw)
+
+244         130 LOAD_GLOBAL              2 (CURRENT_SESSION)
+            142 LOAD_CONST               6 ('is_audited')
+            144 BINARY_SUBSCR
+
+239         154 LOAD_CONST               7 (('status', 'filename', 'business', 'has_data', 'is_audited'))
+            156 BUILD_CONST_KEY_MAP      5
+            158 PRECALL                  1
+            162 CALL                     1
+            172 POP_TOP
+            174 LOAD_CONST               0 (None)
+            176 RETURN_VALUE
+
+246     >>  178 LOAD_FAST                1 (parsed)
+            180 LOAD_ATTR                0 (path)
+            190 LOAD_CONST               8 ('/api/export-docx')
+            192 COMPARE_OP               2 (==)
+            198 POP_JUMP_FORWARD_IF_FALSE    22 (to 244)
+
+247         200 LOAD_FAST                0 (self)
+            202 LOAD_METHOD              3 (export_docx_file)
+            224 PRECALL                  0
+            228 CALL                     0
+            238 POP_TOP
+            240 LOAD_CONST               0 (None)
+            242 RETURN_VALUE
+
+248     >>  244 LOAD_FAST                1 (parsed)
+            246 LOAD_ATTR                0 (path)
+            256 LOAD_CONST               9 ('/api/export-html')
+            258 COMPARE_OP               2 (==)
+            264 POP_JUMP_FORWARD_IF_FALSE    24 (to 314)
+
+249         266 LOAD_FAST                0 (self)
+            268 LOAD_METHOD              4 (export_html_file)
+            290 LOAD_CONST              10 (True)
+            292 KW_NAMES                11
+            294 PRECALL                  1
+            298 CALL                     1
+            308 POP_TOP
+            310 LOAD_CONST               0 (None)
+            312 RETURN_VALUE
+
+250     >>  314 LOAD_FAST                1 (parsed)
+            316 LOAD_ATTR                0 (path)
+            326 LOAD_CONST              12 ('/api/html-content')
+            328 COMPARE_OP               2 (==)
+            334 POP_JUMP_FORWARD_IF_FALSE    24 (to 384)
+
+251         336 LOAD_FAST                0 (self)
+            338 LOAD_METHOD              4 (export_html_file)
+            360 LOAD_CONST              13 (False)
+            362 KW_NAMES                11
+            364 PRECALL                  1
+            368 CALL                     1
+            378 POP_TOP
+            380 LOAD_CONST               0 (None)
+            382 RETURN_VALUE
+
+252     >>  384 LOAD_FAST                1 (parsed)
+            386 LOAD_ATTR                0 (path)
+            396 LOAD_CONST              14 ('/api/export-csv')
+            398 COMPARE_OP               2 (==)
+            404 POP_JUMP_FORWARD_IF_FALSE    22 (to 450)
+
+253         406 LOAD_FAST                0 (self)
+            408 LOAD_METHOD              5 (export_csv_file)
+            430 PRECALL                  0
+            434 CALL                     0
+            444 POP_TOP
+            446 LOAD_CONST               0 (None)
+            448 RETURN_VALUE
+
+255     >>  450 LOAD_FAST                0 (self)
+            452 LOAD_METHOD              6 (send_error)
+            474 LOAD_CONST              15 (404)
+            476 LOAD_CONST              16 ('API not found')
+            478 PRECALL                  2
+            482 CALL                     2
+            492 POP_TOP
+            494 LOAD_CONST               0 (None)
+            496 RETURN_VALUE

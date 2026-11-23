@@ -1,0 +1,19 @@
+# Vercel Ignore Rules
+server.py
+backup_ktcm_pre_vercel
+__pycache__
+*.pyc
+*.bat
+*.ps1
+test_*.py
+inspect_*.py
+sample_test_report.docx
+test.docx
+*.zip
+.git
+.gitignore
+handle_api_*.txt
+ref_*.*
+make_sample.py
+patch_report.py
+run_tests.py

@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KTCM AI Analytics Studio · Nền tảng Phân tích Dữ liệu Chuyên sâu</title>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ========================================================= -->
+  <!-- SLIDE 0: TRANG BÌA (COVER PRESENTATION SLIDE)             -->
+  <!-- ========================================================= -->
+  <div id="cover-screen" class="cover-screen">
+    <header class="cover-header">
+      <div class="cover-brand">
+        <div class="cover-brand-icon">
+          <i data-lucide="sparkles" style="width: 22px; height: 22px; color: white;"></i>
+        </div>
+        <span>KTCM <span style="color: var(--primary);">AI Analytics</span></span>
+      </div>
+      <nav style="display: flex; gap: 18px; align-items: center;">
+        <a href="javascript:void(0)" onclick="enterWorkbench(1)" style="font-size: 13.5px; font-weight: 600; color: var(--text-main); text-decoration: none;">Bàn làm việc</a>
+        <a href="javascript:void(0)" onclick="openAboutPage()" style="font-size: 13.5px; font-weight: 600; color: var(--text-main); text-decoration: none;">Giới thiệu</a>
+        <a href="javascript:void(0)" onclick="openContactPage()" style="font-size: 13.5px; font-weight: 600; color: var(--text-main); text-decoration: none;">Liên hệ</a>
+      </nav>
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <button onclick="toggleTheme()" class="theme-toggle-btn" id="theme-toggle-cover" title="Chuyển chế độ sáng / tối">
+          <i data-lucide="moon" style="width: 14px; height: 14px;"></i>
+          <span id="theme-label-cover">Chế độ tối</span>
+        </button>
+        <span style="font-size: 12px; color: var(--primary-text); background: var(--primary-light); padding: 4px 12px; border-radius: 9999px; border: 1px solid var(--primary-border); font-weight: 700;">
+          Port 8000
+        </span>
+        <button onclick="enterWorkbench(1)" class="btn-secondary">
+          Vào không gian làm việc &rarr;
+        </button>
+      </div>
+    </header>
+
+    <main class="cover-hero">
+      <div class="cover-pill">
+        <i data-lucide="shield-check" style="width: 14px; height: 14px;"></i>
+        CÔNG CỤ AI AGENT PHÂN TÍCH DỮ LIỆU ĐA CHIỀU & NGHIỆM THU TỰ ĐỘNG
+      </div>
+
+      <h1 class="cover-title">
+        KTCM AI Analytics Studio<br>Quy Trình Phân Tích & Báo Cáo Chuyên Sâu 6 Giai Đoạn
+      </h1>
+
+      <p class="cover-subtitle">
+        Nền tảng trí tuệ nhân tạo toàn diện: Tự động nhận diện cấu trúc, Làm sạch dữ liệu, Duyệt đối soát Human-in-the-Loop, So sánh nhóm đa chiều, Dashboard quản trị đến Báo cáo HTML trực tiếp và Đánh giá phản hồi.
+      </p>
+
+      <!-- 6 Stage Interactive Cards on Cover -->
+      <div class="cover-stages-grid">
+        <div class="cover-stage-card" onclick="enterWorkbench(1)">
+          <div class="cover-stage-num">GIAI ĐOẠN 1</div>
+          <div class="cover-stage-title">Kết nối & Bối cảnh</div>
+        </div>
+        <div class="cover-stage-card" onclick="enterWorkbench(2)">
+          <div class="cover-stage-num">GIAI ĐOẠN 2</div>
+          <div class="cover-stage-title">Làm sạch dữ liệu</div>
+        </div>
+        <div class="cover-stage-card" onclick="enterWorkbench(3)">
+          <div class="cover-stage-num">GIAI ĐOẠN 3</div>
+          <div class="cover-stage-title">Duyệt đối soát</div>
+        </div>
+        <div class="cover-stage-card" onclick="enterWorkbench(4)">
+          <div class="cover-stage-num">GIAI ĐOẠN 4</div>
+          <div class="cover-stage-title">Phân tích dữ liệu</div>
+        </div>
+        <div class="cover-stage-card" onclick="enterWorkbench(5)">
+          <div class="cover-stage-num">GIAI ĐOẠN 5</div>
+          <div class="cover-stage-title">Dashboard & KPI</div>
+        </div>
+        <div class="cover-stage-card" onclick="enterWorkbench(6)">
+          <div class="cover-stage-num">GIAI ĐOẠN 6</div>
+          <div class="cover-stage-title">Báo cáo kinh doanh</div>
+        </div>
+      </div>
+
+      <div>
+        <button class="cover-cta-btn" onclick="enterWorkbench(1)">
+          <span>BẮT ĐẦU TRẢI NGHIỆM &bull; VÀO QUY TRÌNH PHÂN TÍCH</span>
+          <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+        </button>
+      </div>
+    </main>
+
+    <footer class="cover-footer">
+      <div>Nhấp vào nút bắt đầu hoặc bất kỳ giai đoạn nào để chuyển ngay sang giao diện phân tích mà không cần cuộn trang.</div>
+      <div>Bảo mật dữ liệu 100% trên Localhost:8000 &bull; KTCM Studio</div>
+    </footer>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- WORKBENCH SCREEN (DESKTOP APPLICATION)                    -->
+  <!-- ========================================================= -->
+  <div id="workbench-screen" class="workbench-screen">
+
+    <!-- ========================================================= -->
+    <!-- TOP TASKBAR & BREADCRUMB (EXACT MATCH USER REFERENCE UI)  -->
+    <!-- ========================================================= -->
+    <header class="taskbar-top">
+      <!-- Left brand & profile -->
+      <div class="taskbar-left">
+        <div class="user-avatar-badge" title="Mai Thảo Vi · Data Analyst & BI">
+          <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Vi&backgroundColor=f5ece4" alt="Avatar" />
+        </div>
+        <div class="user-info">
+          <span class="user-name">Mai Thảo Vi</span>
+          <span class="user-role">Data Analyst & BI</span>
+        </div>
+
+        <!-- Navigation links -->
+        <nav class="taskbar-nav">
+          <a href="javascript:void(0)" onclick="returnToCover()" class="nav-link">Trang chủ</a>
+          <a href="javascript:void(0)" onclick="openAboutPage()" class="nav-link">Giới thiệu</a>
+          <div class="nav-dropdown-wrap">
+            <button class="nav-link-pill" onclick="toggleServicesMenu()">
+              <span>Dịch vụ</span>
+              <i data-lucide="chevron-down" style="width: 13px; height: 13px;"></i>
+            </button>
+            <div class="services-dropdown" id="services-dropdown" style="display: none;">
+              <a href="javascript:void(0)" onclick="navigateToStep(1)">1. Kết nối & Bối cảnh</a>
+              <a href="javascript:void(0)" onclick="navigateToStep(2)">2. Làm sạch dữ liệu</a>
+              <a href="javascript:void(0)" onclick="navigateToStep(3)">3. Duyệt đối soát</a>
+              <a href="javascript:void(0)" onclick="navigateToStep(4)">4. Phân tích chuyên sâu</a>
+              <a href="javascript:void(0)" onclick="navigateToStep(5)">5. Dashboard quản trị</a>
+              <a href="javascript:void(0)" onclick="navigateToStep(6)">6. Báo cáo kết quả</a>
+            </div>
+          </div>
+          <a href="javascript:void(0)" onclick="toggleAIChat()" class="nav-link">Hỏi đáp</a>
+          <a href="javascript:void(0)" onclick="openContactPage()" class="nav-link">Liên hệ</a>
+        </nav>
+      </div>
+
+      <!-- Right actions -->
+      <div class="taskbar-right">
+        <div class="taskbar-search">
+          <i data-lucide="search" style="width: 13px; height: 13px; color: var(--text-muted);"></i>
+          <input type="text" id="taskbar-search-input" placeholder="Tìm trang, dịch vụ..." oninput="filterTaskbarSearch(this.value)">
+        </div>
+
+        <button onclick="toggleTheme()" class="taskbar-circle-btn" id="theme-toggle-taskbar" title="Chuyển chế độ sáng / tối">
+          <i data-lucide="moon" id="theme-icon-taskbar" style="width: 15px; height: 15px;"></i>
+        </button>
+
+        <div class="lang-selector-pill">
+          <span>VN <strong>VI</strong></span>
+          <i data-lucide="chevron-down" style="width: 11px; height: 11px;"></i>
+        </div>
+
+        <button class="taskbar-stats-pill" onclick="showQuickStatsModal()">
+          <i data-lucide="trending-up" style="width: 13px; height: 13px;"></i>
+          <span>Thống kê của tôi</span>
+        </button>
+
+        <button class="taskbar-circle-btn user-btn" title="Hồ sơ cá nhân">
+          <span>👤 j</span>
+        </button>
+
+        <button class="taskbar-circle-btn" onclick="toggleSettingsModal()" title="Cài đặt hệ thống">
+          <i data-lucide="sliders" style="width: 14px; height: 14px;"></i>
+        </button>
+
+        <button class="taskbar-circle-btn" onclick="quickCloudBackup()" title="Đồng bộ đám mây & Lưu trữ">
+          <i data-lucide="cloud-download" style="width: 14px; height: 14px;"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Sub breadcrumb trail -->
+    <div class="breadcrumb-bar">
+      <div class="breadcrumb-trail">
+        <span class="breadcrumb-home" onclick="returnToCover()"><i data-lucide="home" style="width: 13px; height: 13px;"></i> Trang chủ</span>
+        <span class="breadcrumb-sep">&rsaquo;</span>
+        <span class="breadcrumb-mid">Dịch vụ</span>
+        <span class="breadcrumb-sep">&rsaquo;</span>
+        <span class="breadcrumb-current" id="breadcrumb-current-step">Kết quả</span>
+      </div>
+      <div class="breadcrumb-sparkles">
+        <i data-lucide="sparkles" style="width: 15px; height: 15px;"></i>
+      </div>
+    </div>
+
+    <div class="workbench-window">
+      <div class="window-bar">
+        <div class="window-lights">
+          <i></i><i></i><i></i>
+        </div>
+        <span class="window-title">
+          <i data-lucide="monitor" style="width: 13px; height: 13px;"></i>
+          Không gian phân tích dữ liệu tự động
+        </span>
+        <button class="btn-secondary" onclick="resetSession()" title="Tạo phiên mới" style="padding: 3px 8px; font-size: 11px;">
+          <i data-lucide="rotate-ccw" style="width: 12px; height: 12px;"></i> Phiên mới
+        </button>
+      </div>
+
+      <div class="workbench-body">
+        <!-- LEFT SIDEBAR: QUY TRÌNH -->
+        <aside class="sidebar">
+          <div>
+            <div class="sidebar-heading">QUY TRÌNH PHÂN TÍCH</div>
+            <nav class="nav-list">
+              <button onclick="navigateToStep(1)" id="nav-step-1" class="nav-item active">
+                <div class="nav-icon">1</div>
+                <div>
+                  <div class="nav-title">Kết nối & Bối cảnh</div>
+                  <div class="nav-detail">Chọn nguồn & yêu cầu</div>
+                </div>
+              </button>
+
+              <button onclick="navigateToStep(2)" id="nav-step-2" class="nav-item">
+                <div class="nav-icon">2</div>
+                <div>
+                  <div class="nav-title">Làm sạch dữ liệu</div>
+                  <div class="nav-detail">Chuẩn hóa & điền khuyết</div>
+                </div>
+              </button>
+
+              <button onclick="navigateToStep(3)" id="nav-step-3" class="nav-item">
+                <div class="nav-icon">3</div>
+                <div>
+                  <div class="nav-title">Duyệt đối soát</div>
+                  <div class="nav-detail">So sánh bảng trước/sau</div>
+                </div>
+              </button>
+
+              <button onclick="navigateToStep(4)" id="nav-step-4" class="nav-item">
+                <div class="nav-icon">4</div>
+                <div>
+                  <div class="nav-title">Phân tích dữ liệu</div>
+                  <div class="nav-detail">So sánh nhóm & thống kê</div>
+                </div>
+              </button>
+
+              <button onclick="navigateToStep(5)" id="nav-step-5" class="nav-item">
+                <div class="nav-icon">5</div>
+                <div>
+                  <div class="nav-title">Dashboard & KPI</div>
+                  <div class="nav-detail">Chỉ số & đề xuất hành động</div>
+                </div>
+              </button>
+
+              <button onclick="navigateToStep(6)" id="nav-step-6" class="nav-item">
+                <div class="nav-icon">6</div>
+                <div>
+                  <div class="nav-title">Báo cáo kinh doanh</div>
+                  <div class="nav-detail">Nghiệm thu & feedback</div>
+                </div>
+              </button>
+            </nav>
+          </div>
+
+          <div class="sidebar-status-box">
+            <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;" id="dataset-status-dot"></div>
+            <div style="font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="sidebar-dataset-info">
+              Chưa nạp dữ liệu
+            </div>
+          </div>
+        </aside>
+
+        <!-- MAIN VIEW: 6 GIAI ĐOẠN -->
+        <main class="main-content">
+
+          <!-- ========================================== -->
+          <!-- BƯỚC 1: NHẬP DỮ LIỆU & BỐI CẢNH DOANH NGHIỆP -->
+          <!-- ========================================== -->
+          <section id="step-view-1" class="step-view">
+            <div style="margin-bottom: 20px;">
+              <span style="font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase;">GIAI ĐOẠN 1</span>
+              <h1 style="font-size: 22px; font-weight: 800; color: var(--text-main);">Nhập Dữ Liệu & Thiết Lập Bối Cảnh Nghiệp Vụ</h1>
+              <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 2px;">Tải lên tập dữ liệu của bạn hoặc sử dụng bộ dữ liệu mẫu bán lẻ & marketing để trải nghiệm nhanh.</p>
+            </div>
+
+            <!-- Nút 1-Click Demo -->
+            <div class="section-card" style="border-left: 3.5px solid var(--primary); background: var(--latte-bg); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <strong style="color: var(--primary-text); font-size: 13px;">⚡ Chạy thử nhanh với dữ liệu mẫu (1-Click Demo)</strong>
+                <p style="font-size: 11.5px; color: #2d554a; margin-top: 2px;">Nạp ngay 2 bộ dữ liệu: Bán lẻ đa kênh (23 dòng nguồn) và Marketing mẫu (6 dòng) kèm câu hỏi kinh doanh mẫu.</p>
+              </div>
+              <button class="btn-primary" onclick="loadSampleDemo()" style="padding: 8px 16px;">
+                <i data-lucide="play" style="width: 14px; height: 14px;"></i> Chạy Thử Dữ Liệu Mẫu
+              </button>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="section-card" id="drop-area" style="border: 2px dashed #b7d6c8; background: #ffffff; text-align: center; padding: 28px 20px; cursor: pointer; transition: all 0.2s ease;">
+              <i data-lucide="upload-cloud" style="width: 36px; height: 36px; color: var(--primary); margin: 0 auto 10px;"></i>
+              <div style="font-size: 13.5px; font-weight: 750; color: var(--text-main);">Kéo thả tệp dữ liệu vào đây hoặc nhấp để chọn tệp</div>
+              <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px;">Hỗ trợ định dạng Excel (.xlsx, .xls) hoặc CSV (.csv). Tự động chẩn đoán lỗi tệp.</div>
+              <input type="file" id="file-input" style="display: none;" accept=".csv,.xlsx,.xls" onchange="handleFileSelect(event)">
+            </div>
+
+            <!-- Cảnh Báo Lỗi Tệp Nguồn (Critical File Alert) -->
+            <div id="upload-error-alert" class="section-card upload-error-card" style="display: none;">
+              <div style="display: flex; gap: 14px; align-items: flex-start;">
+                <div class="upload-error-icon">
+                  <i data-lucide="alert-octagon" style="width: 24px; height: 24px;"></i>
+                </div>
+                <div style="flex: 1;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <h3 id="upload-error-title" style="font-size: 15px; font-weight: 800; color: #991b1b;">CẢNH BÁO: TỆP DỮ LIỆU KHÔNG HỢP LỆ</h3>
+                    <span style="font-size: 11px; padding: 2px 8px; border-radius: 9999px; background: #fee2e2; color: #991b1b; font-weight: 700;">Lỗi cấu trúc tệp</span>
+                  </div>
+                  <p id="upload-error-message" style="font-size: 12.5px; color: #7f1d1d; line-height: 1.5; margin-bottom: 8px;">
+                    Tệp bạn vừa tải lên không có nội dung hoặc định dạng bảng không thể giải mã.
+                  </p>
+                  <div style="background: rgba(254, 226, 226, 0.5); border-left: 3px solid #dc2626; padding: 6px 10px; border-radius: 4px; font-size: 11.5px; color: #7f1d1d;">
+                    <strong>Khuyến nghị khắc phục:</strong> <span id="upload-error-advice">Vui lòng kiểm tra lại tệp nguồn...</span>
+                  </div>
+                  <div style="display: flex; gap: 10px; margin-top: 12px;">
+                    <button class="btn-secondary" onclick="document.getElementById('file-input').click()" style="padding: 6px 14px; font-size: 12px; border-color: #fca5a5; color: #991b1b;">
+                      <i data-lucide="refresh-cw" style="width: 13px; height: 13px;"></i> Chọn tệp khác
+                    </button>
+                    <button class="btn-primary" onclick="loadSampleDemo()" style="padding: 6px 14px; font-size: 12px;">
+                      <i data-lucide="play" style="width: 13px; height: 13px;"></i> Chạy thử dữ liệu mẫu chuẩn
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Báo Cáo Chẩn Đoán Sức Khỏe Tệp & Cảnh Báo Lỗi Từ AI (AI Health Audit Card) -->
+            <div id="file-audit-summary-box" class="section-card file-audit-card" style="display: none;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <div class="audit-icon-circle">
+                    <i data-lucide="shield-check" style="width: 18px; height: 18px; color: var(--primary);"></i>
+                  </div>
+                  <div>
+                    <h3 style="font-size: 14px; font-weight: 800; color: var(--text-main); margin: 0;">
+                      Chẩn Đoán Sức Khỏe Dữ Liệu &amp; Phát Hiện Lỗi Tự Động
+                    </h3>
+                    <p style="font-size: 11.5px; color: var(--text-muted); margin: 2px 0 0 0;">
+                      AI đã quét toàn diện cấu trúc tệp nguồn ngay khi nạp để cảnh báo các sai lệch.
+                    </p>
+                  </div>
+                </div>
+                <div id="file-health-score-pill" class="health-score-badge">
+                  <i data-lucide="activity" style="width: 14px; height: 14px;"></i>
+                  <span id="health-score-val">Chất lượng: 85/100</span>
+                </div>
+              </div>
+
+              <!-- Issue Pills Grid -->
+              <div id="audit-issues-grid" class="audit-issues-grid">
+                <!-- Dynamically populated issues -->
+              </div>
+
+              <div id="audit-guidance-footer" style="margin-top: 10px; font-size: 11.5px; color: var(--text-muted); background: var(--latte-bg); padding: 8px 12px; border-radius: 6px; display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="info" style="width: 14px; height: 14px; color: var(--primary); flex-shrink: 0;"></i>
+                <span>Các vấn đề này sẽ được chuyển tự động sang <strong>Bước 2 (Làm sạch)</strong> để AI đề xuất phương án điền bù và loại bỏ.</span>
+              </div>
+            </div>
+
+            <!-- Bối cảnh Doanh nghiệp & Trao đổi với AI -->
+            <div class="section-card">
+              <!-- AI Context Detection Badge -->
+              <div id="ai-context-indicator" class="ai-context-indicator" style="display: none;">
+                <i data-lucide="sparkles" style="width: 14px; height: 14px; color: var(--primary);"></i>
+                <span id="ai-context-text">AI đã tự động nhận diện bối cảnh và gợi ý các câu hỏi kinh doanh phù hợp từ tệp dữ liệu.</span>
+              </div>
+
+              <h2 style="font-size: 14px; font-weight: 750; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="briefcase" style="width: 16px; height: 16px; color: var(--primary);"></i>
+                Mô tả Bối cảnh Doanh nghiệp &amp; Trao đổi Yêu cầu với AI
+              </h2>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px;">
+                <div>
+                  <label class="field-label" for="ctx-industry">Lĩnh vực hoạt động / Ngành hàng</label>
+                  <input type="text" id="ctx-industry" class="custom-input" placeholder="Ví dụ: Bán lẻ đa kênh, Thương mại điện tử, F&B...">
+                </div>
+                <div>
+                  <label class="field-label" for="ctx-background">Bối cảnh kinh doanh hiện tại</label>
+                  <input type="text" id="ctx-background" class="custom-input" placeholder="Ví dụ: Đánh giá hiệu quả 4 tháng đầu năm 2026, tối ưu chi phí...">
+                </div>
+              </div>
+              <div>
+                <label class="field-label" for="ctx-questions">Vấn đề cần phân tích & Câu hỏi kinh doanh cho AI (mỗi dòng một câu hỏi)</label>
+                <textarea id="ctx-questions" class="custom-textarea" rows="3" placeholder="Ví dụ:
+Doanh thu theo kênh nào cao nhất?
+Chi phí theo chiến dịch nào cao nhất?"></textarea>
+              </div>
+            </div>
+
+            <!-- Raw Preview Card -->
+            <div id="raw-preview-box" class="section-card" style="display: none;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="font-size: 13px; font-weight: 750; color: #142823;">Xem trước dữ liệu tải lên (<span id="raw-row-col-count">0 dòng x 0 cột</span>)</h3>
+                <span id="raw-filename-badge" style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: #ecfdf5; color: #047857; font-weight: 700;"></span>
+              </div>
+              <div class="table-scroll">
+                <table id="raw-preview-table">
+                  <thead></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+              <button class="btn-primary" onclick="proceedToStep2()">
+                Tiếp tục: Chuyển sang Bước 2 (Làm sạch) &rarr;
+              </button>
+            </div>
+          </section>
+
+          <!-- ========================================== -->
+          <!-- BƯỚC 2: LÀM SẠCH DỮ LIỆU                   -->
+          <!-- ========================================== -->
+          <section id="step-view-2" class="step-view" style="display: none;">
+            <div style="margin-bottom: 20px;">
+              <span style="font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase;">GIAI ĐOẠN 2</span>
+              <h1 style="font-size: 22px; font-weight: 800; color: var(--text-main);">Làm Sạch & Chuẩn Hóa Dữ Liệu Tự Động</h1>
+              <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 2px;">AI quét dữ liệu khuyết thiếu, trùng lặp và sai định dạng, đồng thời giữ nguyên bản gốc để đối soát.</p>
+            </div>
+
+            <!-- Cleaning Detect Box -->
+            <div id="cleaning-detect-summary" class="section-card" style="border-left: 3.5px solid #10b981; background: #ffffff;">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                <i data-lucide="check-circle" style="width: 16px; height: 16px; color: #059669;"></i>
+                <h2 style="font-size: 14px; font-weight: 750;">Kết quả quét phát hiện chất lượng dữ liệu</h2>
+              </div>
+              <div id="cleaning-detect-text" style="font-size: 12px; color: var(--text-muted); line-height: 1.6;">
+                Đang quét dữ liệu...
+              </div>
+            </div>
+
+            <!-- Cleaning Proposals & Options -->
+            <div class="section-card">
+              <h2 style="font-size: 14px; font-weight: 750; margin-bottom: 12px;">Đề xuất phương án xử lý làm sạch</h2>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; cursor: pointer;">
+                  <input type="checkbox" id="rule-dup" checked onchange="updateCleanPreviewLive()">
+                  <span><strong>Loại bỏ hàng trùng lặp:</strong> Xóa các dòng có toàn bộ giá trị trùng lặp 100%.</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; cursor: pointer;">
+                  <input type="checkbox" id="rule-calc" checked onchange="updateCleanPreviewLive()">
+                  <span><strong>Tự động tính công thức quan hệ:</strong> Tự tính `Lợi nhuận gộp = Doanh thu - Chi phí giá vốn` nếu có số liệu.</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 8px; font-size: 12px; cursor: pointer;">
+                  <input type="checkbox" id="rule-strip" checked onchange="updateCleanPreviewLive()">
+                  <span><strong>Chuẩn hóa chuỗi văn bản:</strong> Cắt tỉa khoảng trắng đầu cuối (trim) và chuẩn hóa chữ in hoa đầu từ.</span>
+                </label>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                <button class="btn-secondary" onclick="navigateToStep(1)">&larr; Quay lại: Bước 1</button>
+                <button class="btn-primary" onclick="applyCleaningAndProceed()">
+                  Áp dụng quy tắc &amp; Chuyển sang Duyệt dữ liệu &rarr;
+                </button>
+              </div>
+            </div>
+
+            <!-- BẢNG DỮ LIỆU SAU KHI LÀM SẠCH (XEM TRƯỚC TRỰC QUAN ĐỂ CHECK) -->
+            <div id="clean-preview-box" class="section-card" style="display: none; margin-top: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                <div>
+                  <h2 style="font-size: 15px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                    <i data-lucide="table" style="width: 17px; height: 17px; color: var(--primary);"></i>
+                    Bảng Dữ Liệu Sau Khi Làm Sạch (Xem Trước Trực Tiếp)
+                  </h2>
+                  <p style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+                    Kiểm tra trực tiếp dữ liệu đã được lọc bỏ trùng lặp, điền bù ô trống và chuẩn hóa chuỗi trước khi chuyển sang bước duyệt đối soát.
+                  </p>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                  <span id="clean-preview-count-badge" class="badge-selected" style="font-size: 11.5px; padding: 4px 10px;">
+                    20 dòng sạch x 8 cột
+                  </span>
+                  <span id="clean-preview-diff-badge" style="background: #fefce8; color: #854d0e; border: 1px solid #fde047; padding: 4px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 700;">
+                    Đã chuẩn hóa
+                  </span>
+                </div>
+              </div>
+
+              <div class="table-scroll" style="max-height: 380px;">
+                <table id="clean-preview-table">
+                  <thead></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Cleaning Log -->
+            <div id="cleaning-log-box" class="section-card" style="display: none; background: #fafbfc;">
+              <h3 style="font-size: 12px; font-weight: 750; color: var(--text-main); margin-bottom: 6px;">Nhật ký làm sạch dữ liệu</h3>
+              <ul id="cleaning-log-items" style="font-size: 11.5px; color: var(--text-muted); padding-left: 18px; line-height: 1.6;"></ul>
+            </div>
+          </section>
+
+          <!-- ========================================== -->
+          <!-- BƯỚC 3: DUYỆT ĐỐI SOÁT DỮ LIỆU (AUDIT DIFF) -->
+          <!-- ========================================== -->
+          <section id="step-view-3" class="step-view" style="display: none;">
+            <div style="margin-bottom: 20px;">
+              <span style="font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase;">GIAI ĐOẠN 3</span>
+              <h1 style="font-size: 22px; font-weight: 800; color: var(--text-main);">Duyệt Dữ Liệu &amp; Đối Soát Thay Đổi</h1>
+              <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 2px;">So sánh bảng trước và sau làm sạch. Bấm vào các thẻ chỉ số bên dưới để lọc xem trực tiếp hoặc bấm vào ô để sửa giá trị.</p>
+            </div>
+
+            <!-- Audit Badges (Interactive 4-Card Filter System) -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px;">
+              <div class="metric-stat-box clickable-audit-card" id="audit-card-raw" onclick="filterAuditTable('all')" style="cursor: pointer; text-align: center; border-top: 3.5px solid var(--primary); transition: all 0.2s;" title="Bấm để hiển thị toàn bộ tệp">
+                <div class="metric-stat-label">DÒNG BAN ĐẦU</div>
+                <div id="audit-stat-raw" class="metric-stat-val">23</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Tệp gốc nạp vào</div>
+                <div style="font-size: 10px; color: var(--primary); font-weight: 700; margin-top: 4px;">👉 Bấm xem tất cả</div>
+              </div>
+              <div class="metric-stat-box clickable-audit-card" id="audit-card-valid" onclick="filterAuditTable('valid')" style="cursor: pointer; text-align: center; border-top: 3.5px solid #10b981; background: #ecfdf5; transition: all 0.2s;" title="Bấm để lọc chỉ các dòng đạt chuẩn sạch 100%">
+                <div class="metric-stat-label" style="color: #065f46;">HỢP LỆ</div>
+                <div id="audit-stat-valid" class="metric-stat-val" style="color: #065f46;">18</div>
+                <div style="font-size: 11px; color: #065f46; margin-top: 2px;">Đạt chuẩn sạch 100%</div>
+                <div style="font-size: 10px; color: #065f46; font-weight: 700; margin-top: 4px;">👉 Bấm lọc dòng sạch</div>
+              </div>
+              <div class="metric-stat-box clickable-audit-card" id="audit-card-error" onclick="filterAuditTable('diff')" style="cursor: pointer; text-align: center; border-top: 3.5px solid #f59e0b; background: #fffbeb; transition: all 0.2s;" title="Bấm để lọc trực tiếp các dòng đã xử lý lỗi">
+                <div class="metric-stat-label" style="color: #b45309;">LỖI ĐÃ XỬ LÝ</div>
+                <div id="audit-stat-error" class="metric-stat-val" style="color: #b45309;">4</div>
+                <div style="font-size: 11px; color: #b45309; margin-top: 2px;">Trùng, khuyết, khoảng trắng</div>
+                <div style="font-size: 10px; color: #b45309; font-weight: 700; margin-top: 4px;">👉 Bấm lọc xem dòng sửa</div>
+              </div>
+              <div class="metric-stat-box clickable-audit-card" id="audit-card-current" onclick="filterAuditTable('all')" style="cursor: pointer; text-align: center; border-top: 3.5px solid var(--primary-hover); background: var(--latte-bg); transition: all 0.2s;" title="Bấm để hiển thị toàn bộ bảng sau duyệt">
+                <div class="metric-stat-label" style="color: var(--primary);">DÒNG SAU DUYỆT</div>
+                <div id="audit-stat-current" class="metric-stat-val" style="color: var(--primary);">20</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Sẵn sàng phân tích</div>
+                <div style="font-size: 10px; color: var(--primary); font-weight: 700; margin-top: 4px;">👉 Bấm xem bảng duyệt</div>
+              </div>
+            </div>
+
+            <!-- Detailed Audit Intelligence Cards (Clickable Direct Filter & Explanations) -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px;">
+              <div class="clickable-audit-card" onclick="showDuplicateModal()" style="cursor: pointer; background: var(--card-bg); border: 1px solid #fca5a5; border-radius: 10px; padding: 12px 14px; transition: all 0.2s;" title="Bấm xem chi tiết dòng trùng lặp">
+                <div style="font-size: 11px; font-weight: 800; color: #b91c1c; display: flex; align-items: center; justify-content: space-between;">
+                  <span style="display: flex; align-items: center; gap: 5px;"><i data-lucide="copy-x" style="width: 14px; height: 14px;"></i> 1 DÒNG TRÙNG LẶP HOÀN TOÀN</span>
+                  <span style="font-size: 10px; background: #fee2e2; color: #b91c1c; font-weight: 750; padding: 2px 6px; border-radius: 4px;">Chi tiết &rarr;</span>
+                </div>
+                <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">
+                  Phát hiện bản ghi trùng lặp nội dung tại <strong>Dòng 10 (trùng Dòng 9)</strong>. Đã tự động hợp nhất loại bỏ để tránh double-count doanh số.
+                </p>
+              </div>
+
+              <div class="clickable-audit-card" onclick="filterAuditTable('diff')" style="cursor: pointer; background: var(--card-bg); border: 1px solid #86efac; border-radius: 10px; padding: 12px 14px; transition: all 0.2s;" title="Bấm lọc dòng ô khuyết thiếu đã điền">
+                <div style="font-size: 11px; font-weight: 800; color: #15803d; display: flex; align-items: center; justify-content: space-between;">
+                  <span style="display: flex; align-items: center; gap: 5px;"><i data-lucide="check-check" style="width: 14px; height: 14px;"></i> 1 Ô KHUYẾT THIẾU CỘT KÊNH</span>
+                  <span style="font-size: 10px; background: #dcfce7; color: #15803d; font-weight: 750; padding: 2px 6px; border-radius: 4px;">Lọc xem &rarr;</span>
+                </div>
+                <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">
+                  Tại <strong>Dòng 15</strong> bị trống ô Kênh. Đã tự động điền bù giá trị chuẩn hóa <strong>'Website'</strong> (ô tô màu xanh).
+                </p>
+              </div>
+
+              <div class="clickable-audit-card" onclick="filterAuditTable('diff')" style="cursor: pointer; background: var(--card-bg); border: 1px solid #fde047; border-radius: 10px; padding: 12px 14px; transition: all 0.2s;" title="Bấm lọc dòng khoảng trắng đã chuẩn hóa">
+                <div style="font-size: 11px; font-weight: 800; color: #b45309; display: flex; align-items: center; justify-content: space-between;">
+                  <span style="display: flex; align-items: center; gap: 5px;"><i data-lucide="alert-octagon" style="width: 14px; height: 14px;"></i> 1 DÒNG TRỐNG &amp; KHOẢNG TRẮNG</span>
+                  <span style="font-size: 10px; background: #fef3c7; color: #b45309; font-weight: 750; padding: 2px 6px; border-radius: 4px;">Lọc xem &rarr;</span>
+                </div>
+                <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">
+                  Phát hiện <strong>1 dòng rỗng (Dòng 16)</strong> đã loại bỏ và <strong>khoảng trắng thừa tại Dòng 11 ('  Miền Bắc ')</strong> đã chuẩn hóa.
+                </p>
+              </div>
+            </div>
+
+            <!-- Diff Table -->
+            <div class="section-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+                <div>
+                  <h2 style="font-size: 14px; font-weight: 800; color: var(--text-main);">Bảng đối soát trực quan Human-in-the-Loop (Bấm vào ô để sửa giá trị)</h2>
+                  <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Cột tô màu thể hiện giá trị AI đã can thiệp xử lý. Bấm vào ô bất kỳ để sửa tay.</div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                  <button class="btn-secondary" onclick="filterAuditTable('all')" id="btn-filter-all" style="font-size: 11px; padding: 4px 10px; font-weight: 750; background: var(--primary-light);">Tất cả (20 dòng)</button>
+                  <button class="btn-secondary" onclick="filterAuditTable('diff')" id="btn-filter-diff" style="font-size: 11px; padding: 4px 10px;">Chỉ dòng đã xử lý (2 dòng)</button>
+                  <button class="btn-secondary" onclick="filterAuditTable('valid')" id="btn-filter-valid" style="font-size: 11px; padding: 4px 10px;">Chỉ dòng chuẩn sạch (18 dòng)</button>
+                  <span style="background: #ecfdf5; color: #065f46; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; border: 1px solid #a7f3d0;">✦ Xanh: Đã điền bù</span>
+                  <span style="background: #fefce8; color: #854d0e; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; border: 1px solid #fde047;">✦ Vàng: Đã chuẩn hóa</span>
+                </div>
+              </div>
+
+              <div class="table-scroll" style="max-height: 400px;">
+                <table id="audit-diff-table">
+                  <thead></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px;">
+                <button class="btn-secondary" onclick="navigateToStep(2)">&larr; Quay lại: Bước 2</button>
+                <button class="btn-primary" onclick="confirmAuditAndProceed()">
+                  <i data-lucide="check-circle" style="width: 14px; height: 14px;"></i> Xác nhận duyệt &amp; Chuyển sang Phân tích &rarr;
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- ========================================================= -->
+          <!-- BƯỚC 4: PHÂN TÍCH DỮ LIỆU (EXACT MATCH REFERENCE UI)      -->
+          <!-- ========================================================= -->
+          <section id="step-view-4" class="step-view" style="display: none;">
+            <div style="margin-bottom: 18px;">
+              <h1 style="font-size: 24px; font-weight: 850; color: #142823; letter-spacing: -0.02em;">Phân tích dữ liệu</h1>
+              <p style="font-size: 13px; color: var(--text-muted); margin-top: 2px;">Đọc kết quả theo câu hỏi kinh doanh và kiểm tra số liệu của từng bộ.</p>
+            </div>
+
+            <!-- Card: Phân tích theo bối cảnh -->
+            <div class="context-analysis-card">
+              <div class="context-header">
+                <div class="context-icon-sparkle">✦</div>
+                <div>
+                  <h2 style="font-size: 14px; font-weight: 750; color: #142823; margin: 0;">Phân tích theo bối cảnh</h2>
+                  <div style="font-size: 11px; color: #526f66; margin-top: 2px;" id="analysis-context-sub">Đang tự động nhận diện bối cảnh dữ liệu...</div>
+                </div>
+              </div>
+
+              <div id="analysis-questions-evidence" style="display: flex; flex-direction: column; gap: 10px;">
+                <div class="question-box" style="text-align: center; color: var(--text-muted); padding: 14px;">
+                  <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px;">
+                    <span class="spinner-border" style="width: 12px; height: 12px; border: 2px solid var(--primary); border-right-color: transparent; border-radius: 50%; display: inline-block; animation: spin 0.8s linear infinite;"></span>
+                    Đang giải đáp các câu hỏi kinh doanh theo bộ dữ liệu của bạn...
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dropdown: Bộ dữ liệu đang xem -->
+            <div class="section-card" style="padding: 14px 18px; margin-bottom: 14px;">
+              <label class="field-label" for="dataset-select-step4" style="margin-bottom: 6px;">Bộ dữ liệu đang xem</label>
+              <select id="dataset-select-step4" class="custom-select" onchange="switchStep4Dataset(this.value)">
+                <option value="0">Bộ 1 — Bán lẻ mẫu (23 dòng nguồn)</option>
+                <option value="1">Bộ 2 — Marketing mẫu (6 dòng nguồn)</option>
+              </select>
+            </div>
+
+            <!-- 3 Stat KPI Cards -->
+            <div class="metrics-3col">
+              <div class="metric-stat-box">
+                <div class="metric-stat-label">Dòng dữ liệu</div>
+                <div id="stat-step4-rows" class="metric-stat-val">20</div>
+              </div>
+              <div class="metric-stat-box">
+                <div class="metric-stat-label">Số cột</div>
+                <div id="stat-step4-cols" class="metric-stat-val">8</div>
+              </div>
+              <div class="metric-stat-box">
+                <div class="metric-stat-label">Cột dạng số</div>
+                <div id="stat-step4-numcols" class="metric-stat-val">4</div>
+              </div>
+            </div>
+
+            <!-- Card: So sánh theo nhóm -->
+            <div class="section-card">
+              <h2 style="font-size: 15px; font-weight: 750;">So sánh theo nhóm</h2>
+              <div class="chart-controls">
+                <div>
+                  <span class="field-label">Nhóm theo</span>
+                  <select id="group-by-dim-select" class="custom-select" onchange="updateGroupProgressBars()">
+                    <option value="Khu vực" selected>Khu vực</option>
+                    <option value="Kênh">Kênh</option>
+                    <option value="Sản phẩm">Sản phẩm</option>
+                    <option value="Tháng">Tháng</option>
+                  </select>
+                </div>
+                <div>
+                  <span class="field-label">Phép tổng hợp</span>
+                  <select id="group-by-mode-select" class="custom-select" onchange="updateGroupProgressBars()">
+                    <option value="sum" selected>Tổng</option>
+                    <option value="mean">Trung bình</option>
+                    <option value="count">Số dòng</option>
+                    <option value="max">Lớn nhất</option>
+                    <option value="min">Nhỏ nhất</option>
+                  </select>
+                </div>
+                <div>
+                  <span class="field-label">Cột số</span>
+                  <select id="group-by-metric-select" class="custom-select" onchange="updateGroupProgressBars()">
+                    <option value="Doanh thu (VND)" selected>Doanh thu (VND)</option>
+                    <option value="Chi phí giá vốn (VND)">Chi phí giá vốn (VND)</option>
+                    <option value="Lợi nhuận gộp (VND)">Lợi nhuận gộp (VND)</option>
+                    <option value="Số đơn">Số đơn</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Horizontal Progress Bars Container -->
+              <div id="step4-group-chart" class="chart">
+                <div class="bar-row">
+                  <span class="bar-label">Miền Nam</span>
+                  <div class="bar-track"><span class="bar-fill" style="width: 100%;"></span></div>
+                  <span class="bar-value">185.500.000</span>
+                </div>
+                <div class="bar-row">
+                  <span class="bar-label">Miền Bắc</span>
+                  <div class="bar-track"><span class="bar-fill" style="width: 64.6%;"></span></div>
+                  <span class="bar-value">119.800.000</span>
+                </div>
+                <div class="bar-row">
+                  <span class="bar-label">Miền Trung</span>
+                  <div class="bar-track"><span class="bar-fill" style="width: 28.9%;"></span></div>
+                  <span class="bar-value">53.600.000</span>
+                </div>
+              </div>
+              <p style="font-size: 11px; color: var(--text-muted); margin-top: 8px;" id="step4-group-footer">3 nhóm theo giá trị giảm dần.</p>
+            </div>
+
+            <!-- Card: Nhận xét tự động -->
+            <div class="section-card">
+              <h2 style="font-size: 15px; font-weight: 750;">Nhận xét tự động</h2>
+              <ul class="findings" id="step4-auto-findings">
+                <li>"Miền Nam" có tổng của "Doanh thu (VND)" cao nhất trong 3 nhóm của "Khu vực" (185.500.000).</li>
+                <li>"Doanh thu (VND)" có giá trị từ 5.400.000 đến 35.700.000, trung bình 17.945.000.</li>
+                <li>Còn 1 ô trống. "Kênh" thiếu nhiều nhất với 1 trên 20 dòng.</li>
+              </ul>
+              <div id="step4-agent-note-box" style="display: none; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 9px; padding: 10px 14px; margin-top: 12px;">
+                <strong style="color: #065f46; font-size: 12px;">✦ Nhận định bổ sung từ AI:</strong>
+                <p id="step4-agent-note-text" style="color: #164e63; font-size: 12px; margin-top: 4px;"></p>
+              </div>
+            </div>
+
+            <!-- Card: Thống kê theo cột -->
+            <div class="section-card">
+              <h2 style="font-size: 15px; font-weight: 750;">Thống kê theo cột</h2>
+              <p style="font-size: 12px; color: var(--text-muted);">Ứng dụng nhận dạng cột số theo định dạng bạn chọn.</p>
+              <div style="margin: 10px 0 12px;">
+                <label class="field-label">Định dạng số</label>
+                <select id="step4-locale-select" class="custom-select" style="max-width: 220px;" onchange="updateStep4StatsTable()">
+                  <option value="vi" selected>Việt Nam · 1.234,56</option>
+                  <option value="en">Quốc tế · 1,234.56</option>
+                </select>
+              </div>
+
+              <div class="table-scroll">
+                <table id="step4-stats-table">
+                  <thead>
+                    <tr>
+                      <th>Cột</th>
+                      <th>Kiểu</th>
+                      <th>Ô trống</th>
+                      <th>Giá trị khác nhau</th>
+                      <th>Trung bình</th>
+                      <th>Nhỏ nhất</th>
+                      <th>Lớn nhất</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Tháng</td><td>Văn bản / khác</td><td>0</td><td>4</td><td>—</td><td>—</td><td>—</td></tr>
+                    <tr><td>Khu vực</td><td>Văn bản / khác</td><td>0</td><td>3</td><td>—</td><td>—</td><td>—</td></tr>
+                    <tr><td>Kênh</td><td>Văn bản / khác</td><td>1</td><td>3</td><td>—</td><td>—</td><td>—</td></tr>
+                    <tr><td>Sản phẩm</td><td>Văn bản / khác</td><td>0</td><td>3</td><td>—</td><td>—</td><td>—</td></tr>
+                    <tr><td>Số đơn</td><td>Số</td><td>0</td><td>19</td><td>37,55</td><td>18</td><td>66</td></tr>
+                    <tr><td>Doanh thu (VND)</td><td>Số</td><td>0</td><td>20</td><td>17.945.000</td><td>5.400.000</td><td>35.700.000</td></tr>
+                    <tr><td>Chi phí giá vốn (VND)</td><td>Số</td><td>0</td><td>20</td><td>11.125.900</td><td>3.348.000</td><td>22.134.000</td></tr>
+                    <tr><td>Lợi nhuận gộp (VND)</td><td>Số</td><td>0</td><td>20</td><td>6.819.100</td><td>2.052.000</td><td>13.566.000</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Card: Duyệt bước này -->
+            <div class="review-card">
+              <div class="review-heading">
+                <div class="review-check-icon">✓</div>
+                <div>
+                  <h3 style="font-size: 14px; font-weight: 750; color: #142823; margin: 0;">Duyệt bước này</h3>
+                  <p style="font-size: 11.5px; color: #58736a; margin: 2px 0 0;">Kiểm tra kết quả phân tích trước khi tạo báo cáo.</p>
+                </div>
+              </div>
+
+              <label class="field-label" for="step4-refine-input">Yêu cầu sửa</label>
+              <textarea id="step4-refine-input" class="custom-textarea" rows="2" placeholder="Ví dụ: Tính doanh thu trung bình theo kênh, phân tích chi tiết chi phí..." oninput="handleStep4Input()"></textarea>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                <span style="font-size: 11px; color: var(--text-muted);">Yêu cầu chỉnh sửa áp dụng cho bộ dữ liệu đang chọn. Bấm nút để AI áp dụng tự động.</span>
+                <button class="btn-secondary" id="step4-refine-btn" onclick="submitStep4Refine()" style="border-color: var(--primary-border); color: var(--primary-text); background: var(--latte-bg); font-weight: 700; cursor: pointer; transition: all 0.2s ease;">
+                  ✦ Đề xuất chỉnh sửa
+                </button>
+              </div>
+
+              <!-- Dedicated Feedback Box -->
+              <div id="step4-refine-result-box" style="display: none; margin-top: 14px; padding: 12px 16px; background: #ecfdf5; border: 1.5px solid #a7f3d0; border-radius: 8px;">
+                <div style="display: flex; align-items: center; gap: 8px; font-weight: 750; color: #065f46; font-size: 13px;">
+                  <span>✓ Đã áp dụng yêu cầu hiệu chỉnh thành công</span>
+                </div>
+                <div id="step4-refine-result-text" style="font-size: 12.5px; color: #1e293b; margin-top: 6px; line-height: 1.5;"></div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; border-top: 1px solid var(--line); padding-top: 14px;">
+                <button class="btn-secondary" onclick="navigateToStep(2)">&larr; Làm sạch</button>
+                <button class="btn-primary" onclick="navigateToStep(5)">Chuyển sang Dashboard KPI &rarr;</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- ========================================== -->
+          <!-- BƯỚC 5: DASHBOARD TỔNG QUAN & LỌC DỮ LIỆU  -->
+          <!-- ========================================== -->
+          <section id="step-view-5" class="step-view" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+              <div>
+                <span style="font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase;">GIAI ĐOẠN 5</span>
+                <h1 style="font-size: 22px; font-weight: 800; color: var(--text-main);">Dashboard Tổng Quan & Bộ Lọc Tương Tác</h1>
+              </div>
+
+              <div style="display: flex; gap: 8px; align-items: center;" id="dash-filter-container">
+                <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 600;">Bộ lọc:</span>
+                <select id="dash-filter-channel" class="custom-select dash-dynamic-filter" data-col="Kênh" style="width: auto;" onchange="applyDashFilter()">
+                  <option value="ALL">Tất cả kênh bán</option>
+                  <option value="Website">Website</option>
+                  <option value="Cửa hàng">Cửa hàng</option>
+                  <option value="Đối tác">Đối tác</option>
+                </select>
+                <select id="dash-filter-region" class="custom-select dash-dynamic-filter" data-col="Khu vực" style="width: auto;" onchange="applyDashFilter()">
+                  <option value="ALL">Tất cả khu vực</option>
+                  <option value="Miền Nam">Miền Nam</option>
+                  <option value="Miền Bắc">Miền Bắc</option>
+                  <option value="Miền Trung">Miền Trung</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- KPI Cards Row -->
+            <div id="dash-kpi-row" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px;"></div>
+
+            <!-- Charts Grid -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 14px; margin-bottom: 18px;">
+              <div class="section-card" style="margin: 0;">
+                <h3 id="dash-chart-bar-title" style="font-size: 13px; font-weight: 750; margin-bottom: 8px;">Doanh thu theo Kênh bán lẻ</h3>
+                <div style="height: 220px;"><canvas id="dash-chart-bar"></canvas></div>
+              </div>
+              <div class="section-card" style="margin: 0;">
+                <h3 id="dash-chart-donut-title" style="font-size: 13px; font-weight: 750; margin-bottom: 8px;">Tỷ trọng theo Khu vực</h3>
+                <div style="height: 220px;"><canvas id="dash-chart-donut"></canvas></div>
+              </div>
+            </div>
+
+            <div class="section-card">
+              <h3 id="dash-chart-line-title" style="font-size: 13px; font-weight: 750; margin-bottom: 8px;">Xu hướng biến động theo thời gian / phân kỳ</h3>
+              <div style="height: 200px;"><canvas id="dash-chart-line"></canvas></div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+              <button class="btn-secondary" onclick="navigateToStep(4)">&larr; Quay lại: Bước 4</button>
+              <button class="btn-primary" onclick="navigateToStep(6)">Chuyển sang Báo Cáo Kinh Doanh &rarr;</button>
+            </div>
+          </section>
+
+          <!-- ========================================================= -->
+          <!-- BƯỚC 6: BÁO CÁO PHÂN TÍCH CHUYÊN SÂU (CHUẨN MAUDUONG.PDF)  -->
+          <!-- ========================================================= -->
+          <section id="step-view-6" class="step-view report-view" style="display: none;">
+            
+            <!-- TOP EXECUTIVE ACTION TOOLBAR (OUTSIDE DOCUMENT) -->
+            <div class="report-action-toolbar">
+              <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <span class="doc-meta-badge" style="color: #15803d; background: #dcfce7; border-color: #86efac;">
+                  ● COMPLETED · Phiên Thẩm Định
+                </span>
+                <span style="font-size: 11.5px; color: var(--text-muted);">
+                  Kiểm toán 100% dữ liệu gốc &bull; Xuất bản chính thức
+                </span>
+              </div>
+
+              <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                <!-- Nút xuất file dữ liệu đã làm sạch -->
+                <button class="btn-primary" onclick="exportFile('excel')" style="background: #047857; border-color: #065f46; padding: 6px 12px; font-size: 11.5px;" title="Tải tệp Excel chứa dữ liệu đã làm sạch 100%">
+                  <i data-lucide="file-spreadsheet" style="width: 14px; height: 14px;"></i> Xuất Excel Sạch (.xlsx)
+                </button>
+                <button class="btn-secondary" onclick="exportFile('csv')" style="padding: 6px 12px; font-size: 11.5px;" title="Tải tệp CSV chuẩn hóa">
+                  <i data-lucide="table" style="width: 14px; height: 14px;"></i> Xuất CSV Sạch
+                </button>
+
+                <!-- Nút xuất báo cáo tổng hợp -->
+                <button class="btn-primary" onclick="exportFile('docx')" style="background: var(--primary); border-color: var(--primary-hover); padding: 6px 12px; font-size: 11.5px;">
+                  <i data-lucide="file-text" style="width: 14px; height: 14px;"></i> Xuất Word (.DOCX)
+                </button>
+                <button class="btn-secondary" onclick="exportFile('html')" style="padding: 6px 12px; font-size: 11.5px;">
+                  <i data-lucide="globe" style="width: 14px; height: 14px;"></i> Tải HTML
+                </button>
+                <button class="btn-secondary" onclick="window.print()" style="padding: 6px 12px; font-size: 11.5px;" title="In trực tiếp hoặc Lưu dưới dạng PDF chuẩn trang A4">
+                  <i data-lucide="printer" style="width: 14px; height: 14px;"></i> In / Lưu PDF
+                </button>
+                <button class="btn-secondary" onclick="toggleHtmlLiveViewer()" style="padding: 6px 12px; font-size: 11.5px;">
+                  <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> Xem trực tiếp HTML
+                </button>
+                <button class="btn-secondary" onclick="toggleReportRefineDrawer()" style="padding: 6px 12px; font-size: 11.5px; border-color: var(--primary-border); color: var(--primary-text);">
+                  <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i> Hiệu chỉnh AI
+                </button>
+              </div>
+            </div>
+
+            <!-- COLLAPSIBLE AI REFINE DRAWER (OUTSIDE DOCUMENT) -->
+            <div id="report-refine-drawer" style="display: none; background: var(--latte-bg); border: 1px solid var(--primary-border); border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 13px; color: var(--primary);">✦ Yêu cầu AI bổ sung phân tích hoặc thay đổi trọng tâm:</strong>
+                <button class="btn-secondary" onclick="toggleReportRefineDrawer()" style="font-size: 11px; padding: 2px 8px;">Đóng</button>
+              </div>
+              <textarea id="step6-refine-input" class="custom-textarea" rows="2" placeholder="Ví dụ: Nhấn mạnh phân bổ nguồn lực kinh doanh cho kênh Website và tối ưu chi phí quảng cáo tìm kiếm..."></textarea>
+              <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+                <button class="btn-primary" onclick="submitStep6Refine()" style="font-size: 11.5px;">✦ Gửi yêu cầu tinh chỉnh AI</button>
+              </div>
+            </div>
+
+            <!-- ========================================================= -->
+            <!-- THE PRISTINE EXECUTIVE REPORT (EXACT MATCH MAUDUONG.PDF)  -->
+            <!-- ========================================================= -->
+                                    <div id="report-document" class="report-document-container">
+              <!-- Bìa tài liệu / Header tài liệu chính thức -->
+              <div class="doc-top-bar" style="border-bottom: 2.5px solid var(--primary); padding-bottom: 16px; margin-bottom: 24px;">
+                <div>
+                  <div style="font-size: 11px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">
+                    🏛 KTCM AI ANALYTICS STUDIO &bull; TÀI LIỆU ĐIỀU HÀNH CHUYÊN SÂU
+                  </div>
+                  <h1 class="doc-title" id="report-doc-title" style="font-size: 24px; font-weight: 850; color: var(--text-main); margin: 0;">
+                    Báo Cáo Phân Tích Dữ Liệu Điều Hành
+                  </h1>
+                  <div class="doc-meta" style="margin-top: 6px; font-size: 12px; color: var(--text-muted);">
+                    Chuyên viên Phân tích (Lead Data Analyst): <strong style="color: var(--primary);">Mai Thảo Vi</strong> &bull; Phiên: <strong id="report-doc-meta-session" style="color: var(--text-main);">HP-20261118-FINAL</strong> &bull; Trạng thái: <span style="color: #15803d; font-weight: 700;">● COMPLETED</span>
+                  </div>
+                </div>
+                <div style="text-align: right;">
+                  <span class="doc-meta-badge" style="font-size: 11.5px; padding: 4px 10px;">Bản nghiệm thu chính thức</span>
+                  <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 6px;" id="report-doc-meta-file">
+                    Đang nạp tệp dữ liệu...
+                  </div>
+                </div>
+              </div>
+
+              <!-- ========================================================= -->
+              <!-- 1. TÓM TẮT ĐIỀU HÀNH (EXECUTIVE SUMMARY)                   -->
+              <!-- ========================================================= -->
+              <div class="doc-section" id="section-1-summary" style="margin-bottom: 28px;">
+                <div class="report-section-header">
+                  <span class="report-section-num">1</span>
+                  <h2 class="report-section-title">Tóm tắt điều hành (Executive Summary)</h2>
+                </div>
+
+                <!-- 2 Priority Cards -->
+                <div class="priority-cards-grid" id="report-priority-cards-grid" style="margin-bottom: 14px;">
+                  <!-- Dynamically rendered -->
+                </div>
+
+                <!-- Bảng Tổng Hợp Chỉ Tiêu Điều Hành Cốt Lõi (Word-styled Table) -->
+                <div id="report-overview-table-container" style="margin-bottom: 16px;">
+                  <!-- Dynamically rendered -->
+                </div>
+
+                <!-- Summary text -->
+                <div id="report-summary-content" class="report-prose-block">
+                  <!-- Dynamically rendered -->
+                </div>
+              </div>
+
+              <!-- ========================================================= -->
+              <!-- 2. CÁC CHỈ SỐ GỒM BIỂU ĐỒ VÀ DASHBOARD                    -->
+              <!-- ========================================================= -->
+              <div class="doc-section" id="section-2-dashboard" style="margin-bottom: 28px;">
+                <div class="report-section-header">
+                  <span class="report-section-num">2</span>
+                  <h2 class="report-section-title">Hệ thống biểu đồ phân tích chi tiết & Dashboard điều hành</h2>
+                </div>
+
+                <!-- Dashboard 4 KPIs Cards -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px;" id="report-kpis-grid">
+                  <!-- Dynamically rendered -->
+                </div>
+
+                <!-- Bảng Thống Kê Chi Tiết Chỉ Số (Word-styled Table) -->
+                <div id="report-kpi-stats-container" style="margin-bottom: 18px;">
+                  <!-- Dynamically rendered -->
+                </div>
+
+                <!-- Hệ thống Biểu đồ Đa Sắc Nhạt -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;" id="report-charts-grid">
+                  <!-- Dynamically rendered with live charts -->
+                </div>
+              </div>
+
+              <!-- ========================================================= -->
+              <!-- 3. PHÂN TÍCH CHUYÊN ĐỀ (DEEP-DIVE THEMATIC ANALYSIS)       -->
+              <!-- ========================================================= -->
+              <div class="doc-section" id="section-3-deepdive" style="margin-bottom: 28px;">
+                <div class="report-section-header">
+                  <span class="report-section-num">3</span>
+                  <h2 class="report-section-title">Phân tích chuyên đề chuyên sâu</h2>
+                </div>
+
+                <div id="report-thematic-content" class="report-prose-block" style="margin-bottom: 16px;">
+                  <!-- Dynamically rendered detailed thematic insights -->
+                </div>
+
+                <!-- Bảng Đối Chuẩn Định Lượng -->
+                <div>
+                  <h3 style="font-size: 13.5px; font-weight: 800; color: var(--primary); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                    📊 Bảng So Sánh Đối Chuẩn & Phân Loại Hiệu Quả
+                  </h3>
+                  <div class="table-scroll">
+                    <table class="report-table">
+                      <thead>
+                        <tr>
+                          <th>Phân loại / Kênh</th>
+                          <th style="text-align: center;">Số lượt</th>
+                          <th>Tổng giá trị</th>
+                          <th style="text-align: center;">Tỷ trọng</th>
+                          <th style="text-align: center;">Điểm số</th>
+                          <th style="text-align: center;">Kết luận</th>
+                          <th>Căn cứ định lượng & Lý do chi tiết</th>
+                        </tr>
+                      </thead>
+                      <tbody id="report-benchmark-tbody">
+                        <!-- Dynamically rendered -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ========================================================= -->
+              <!-- 4. KẾT LUẬN VÀ ĐỀ XUẤT HÀNH ĐỘNG                          -->
+              <!-- ========================================================= -->
+              <div class="doc-section" id="section-4-actions" style="margin-bottom: 28px;">
+                <div class="report-section-header">
+                  <span class="report-section-num">4</span>
+                  <h2 class="report-section-title">Kết luận & Đề xuất hành động chiến lược</h2>
+                </div>
+
+                <div id="report-conclusions-content" class="report-prose-block" style="margin-bottom: 16px;">
+                  <!-- Dynamically rendered strategic takeaways -->
+                </div>
+
+                <!-- Kế hoạch Hành động Chiến lược 4 Giai đoạn -->
+                <div>
+                  <h3 style="font-size: 13.5px; font-weight: 800; color: var(--primary); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                    🚀 Lộ Trình Triển Khai Chiến Lược 4 Giai Đoạn (Go / No-Go Roadmap)
+                  </h3>
+                  <div class="table-scroll">
+                    <table class="report-table">
+                      <thead>
+                        <tr>
+                          <th style="width: 14%;">Giai đoạn</th>
+                          <th style="width: 14%;">Thời hạn</th>
+                          <th style="width: 32%;">Hạng mục trọng tâm</th>
+                          <th style="width: 24%;">Tiêu chuẩn Go / No-Go</th>
+                          <th style="width: 16%;">Phụ trách</th>
+                        </tr>
+                      </thead>
+                      <tbody id="report-roadmap-tbody">
+                        <!-- Dynamically rendered -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ========================================================= -->
+              <!-- 5. NGUỒN VÀ CHẤT LƯỢNG DỮ LIỆU                            -->
+              <!-- ========================================================= -->
+              <div class="doc-section" id="section-5-data-quality" style="margin-bottom: 28px;">
+                <div class="report-section-header">
+                  <span class="report-section-num">5</span>
+                  <h2 class="report-section-title">Nguồn và chất lượng dữ liệu (Audit Trail)</h2>
+                </div>
+
+                <div id="report-data-quality-content" class="report-prose-block" style="margin-bottom: 16px;">
+                  <!-- Dynamically rendered Audit summary -->
+                </div>
+
+                <!-- Bảng Nhật Ký Kiểm Toán Chất Lượng Dữ Liệu -->
+                <div id="report-audit-log-container">
+                  <!-- Dynamically rendered -->
+                </div>
+              </div>
+
+              <!-- Sign-off Block -->
+              <!-- Sign-off Block (Không kèm hotline và chữ ký cá nhân) -->
+              <div class="report-sign-block" style="border-top: 1.5px solid var(--line); padding-top: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase;">🏛 KTCM AI ANALYTICS STUDIO &bull; BÁO CÁO ĐIỀU HÀNH ĐÃ KIỂM TOÁN</div>
+                  <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 3px;">Hệ thống phân tích tự động chuẩn hóa 100% dữ liệu gốc &bull; Thẩm định toàn vẹn phục vụ điều hành và ra quyết định</div>
+                </div>
+                <div style="text-align: right;">
+                  <span class="badge-selected" style="font-size: 12px; padding: 5px 12px; display: inline-block;">✓ BÁO CÁO ĐÃ XÁC THỰC HOÀN TẤT</span>
+                  <div style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">Xác thực hệ thống: KTCM AI Analytics Studio v2.6</div>
+                </div>
+              </div>
+            </div>
+
+          </section>
+
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- FLOATING AI CHATBOT WIDGET & READY-MADE QUESTIONS         -->
+  <!-- ========================================================= -->
+  <div class="ai-chatbot-widget">
+    <!-- Popup Chat Window -->
+    <div id="ai-chat-window" class="ai-chat-window">
+      <div class="ai-chat-header">
+        <div class="ai-chat-header-info">
+          <div class="ai-chat-avatar">
+            <i data-lucide="bot" style="width: 18px; height: 18px; color: #ffffff;"></i>
+          </div>
+          <div>
+            <div class="ai-chat-header-title">Trợ lý Phân tích AI KTCM</div>
+            <div class="ai-chat-header-status">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; display: inline-block;"></span>
+              <span>Trực tuyến &bull; Phân tích dữ liệu</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <button class="ai-chat-close-btn" onclick="toggleAIChat()" title="Đóng">✕</button>
+        </div>
+      </div>
+
+      <div id="ai-chat-body" class="ai-chat-body">
+        <!-- Initial Message -->
+        <div class="chat-message ai">
+          <div class="chat-bubble">
+            Xin chào! Tôi là Trợ lý AI Phân tích Dữ liệu KTCM. Bạn có thể chọn nhanh một câu hỏi có sẵn bên dưới hoặc nhập câu hỏi bất kỳ để tôi phân tích số liệu ngay:
+          </div>
+          <div class="chat-timestamp">Hôm nay</div>
+        </div>
+
+        <!-- Ready-made prompt chips -->
+        <div class="chat-suggestions" id="chat-quick-suggestions">
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 2px;">⚡ Câu hỏi AI sẵn có:</div>
+          <button class="suggestion-chip" onclick="askAIChat('Kênh nào có doanh thu cao nhất?')">
+            📊 Kênh nào có doanh thu cao nhất?
+          </button>
+          <button class="suggestion-chip" onclick="askAIChat('Chi phí theo chiến dịch nào cao nhất?')">
+            💰 Chi phí theo chiến dịch nào cao nhất?
+          </button>
+          <button class="suggestion-chip" onclick="askAIChat('So sánh tăng trưởng Tháng 04 so với Tháng 03')">
+            📈 So sánh tăng trưởng Tháng 04 vs Tháng 03
+          </button>
+          <button class="suggestion-chip" onclick="askAIChat('Phân tích biên lợi nhuận và cơ cấu chi phí')">
+            💵 Phân tích biên lợi nhuận & cơ cấu chi phí
+          </button>
+          <button class="suggestion-chip" onclick="askAIChat('Có giao dịch đột biến hay bất thường nào không?')">
+            🔍 Có giao dịch đột biến hay bất thường không?
+          </button>
+          <button class="suggestion-chip" onclick="askAIChat('Đề xuất giải pháp tối ưu lợi nhuận')">
+            🚀 Đề xuất chiến lược tối ưu lợi nhuận
+          </button>
+        </div>
+      </div>
+
+      <div class="ai-chat-footer">
+        <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Hỏi AI bất kỳ điều gì về dữ liệu..." onkeydown="handleChatKeyDown(event)">
+        <button class="ai-chat-send-btn" onclick="sendAIChatMessage()" title="Gửi câu hỏi">
+          <i data-lucide="send" style="width: 14px; height: 14px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Floating Trigger Button -->
+    <button class="ai-chat-trigger-btn" onclick="toggleAIChat()" id="ai-chat-trigger-btn">
+      <span class="ai-chat-bubble-badge"></span>
+      <i data-lucide="sparkles" style="width: 17px; height: 17px;"></i>
+      <span>Trợ lý AI Phân Tích</span>
+    </button>
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- DEDICATED ABOUT SCREEN (TRANG GIỚI THIỆU - MAI THẢO VI)   -->
+  <!-- ========================================================= -->
+  <div id="about-screen" class="page-screen" style="display: none;">
+    <header class="page-header">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <button class="btn-secondary" onclick="enterWorkbench(1)" style="padding: 5px 12px; font-size: 12px;">
+          <i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i> Về Bàn Làm Việc
+        </button>
+        <span style="font-size: 16px; font-weight: 850; color: var(--text-main);">
+          🏛 KTCM <span style="color: var(--primary);">AI Analytics Studio</span>
+        </span>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <button class="btn-secondary" onclick="openContactPage()" style="padding: 5px 12px; font-size: 12px;">
+          Liên Hệ Hợp Tác &rarr;
+        </button>
+        <button onclick="toggleTheme()" class="taskbar-circle-btn" title="Sáng / Tối">
+          <i data-lucide="moon" style="width: 14px; height: 14px;"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="page-container">
+      <!-- Hero -->
+      <div style="text-align: center; max-width: 820px; margin: 0 auto 40px;">
+        <span class="cover-pill" style="display: inline-flex; margin-bottom: 14px;">
+          <i data-lucide="sparkles" style="width: 14px; height: 14px;"></i>
+          GIỚI THIỆU NỀN TẢNG &amp; NHÀ SÁNG LẬP
+        </span>
+        <h1 style="font-size: 32px; font-weight: 850; color: var(--text-main); line-height: 1.3; margin-bottom: 12px;">
+          Đơn Giản Hóa Phân Tích Dữ Liệu Kinh Doanh<br>Bằng Trí Tuệ Nhân Tạo Thông Minh
+        </h1>
+        <p style="font-size: 14.5px; color: var(--text-muted); line-height: 1.6;">
+          KTCM AI Analytics Studio là giải pháp AI Agent toàn diện được sáng lập bởi <strong>Mai Thảo Vi</strong> nhằm tự động hóa quy trình phân tích dữ liệu 6 giai đoạn, loại bỏ hoàn toàn các thao tác thủ công phức tạp và cung cấp báo cáo quản trị cấp cao trong tích tắc.
+        </p>
+      </div>
+
+      <!-- 2-Column Content -->
+      <div style="display: grid; grid-template-columns: 1fr 1.35fr; gap: 32px; align-items: start; margin-bottom: 40px;">
+        <!-- Left: Founder Card -->
+        <div class="contact-card-info">
+          <div style="text-align: center; margin-bottom: 18px;">
+            <div class="contact-avatar-circle" style="width: 76px; height: 76px; font-size: 26px; margin: 0 auto 12px;">
+              MV
+            </div>
+            <h2 style="font-size: 20px; font-weight: 850; color: var(--text-main);">Mai Thảo Vi</h2>
+            <div style="font-size: 12.5px; font-weight: 750; color: var(--primary); margin-top: 2px;">
+              Founder &amp; Lead AI Engineer
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+              Chuyên gia Data Analytics &amp; Hệ Thống Trí Tuệ Nhân Tạo
+            </div>
+          </div>
+
+          <div style="background: var(--latte-bg); border-radius: 12px; padding: 16px; border: 1px solid var(--line-border); font-size: 12.5px; line-height: 1.6; color: var(--text-main); margin-bottom: 20px;">
+            <strong style="color: var(--primary);">✦ Lời nhắn từ Nhà sáng lập:</strong>
+            <p style="margin-top: 6px;">
+              "Tôi xây dựng nền tảng này xuất phát từ mong muốn giúp mọi chủ doanh nghiệp, nhà quản lý và chuyên viên phân tích có thể biến các tệp Excel, CSV khô khan thành bức tranh kinh doanh sống động mà không cần phải thành thạo lập trình hay công thức phức tạp. Hãy để AI đảm nhận phần tính toán nặng nhọc, bạn chỉ cần tập trung vào việc ra quyết định chiến lược."
+            </p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-main);">
+              <i data-lucide="phone" style="width: 15px; height: 15px; color: var(--primary);"></i>
+              <span>Hotline / Zalo: <strong>0869.083.0**</strong></span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-main);">
+              <i data-lucide="mail" style="width: 15px; height: 15px; color: var(--primary);"></i>
+              <span>Email: <strong>chulonbuonba@gmail.com</strong></span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-main);">
+              <i data-lucide="map-pin" style="width: 15px; height: 15px; color: var(--primary);"></i>
+              <span>Trụ sở: Tòa nhà KTCM Studio, Hà Nội &amp; TP.HCM</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: 6 Công dụng vượt trội -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <h2 style="font-size: 20px; font-weight: 850; color: var(--text-main); margin-bottom: 4px;">
+            Công Dụng &amp; Giá Trị Đột Phá Của Hệ Thống
+          </h2>
+
+          <div style="background: var(--card-bg); border: 1px solid var(--line-border); border-radius: 14px; padding: 16px 20px;">
+            <div style="font-size: 14px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 8px;">
+              <i data-lucide="workflow" style="width: 16px; height: 16px;"></i> 1. Tự Động Hóa 6 Giai Đoạn Chuẩn Mực
+            </div>
+            <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">
+              Khép kín quy trình từ Nhập dữ liệu &bull; Làm sạch tự động &bull; Duyệt đối soát &bull; Phân tích đa chiều &bull; Dashboard trực quan đến Báo cáo điều hành. Tiết kiệm 90% thời gian xử lý dữ liệu.
+            </p>
+          </div>
+
+          <div style="background: var(--card-bg); border: 1px solid var(--line-border); border-radius: 14px; padding: 16px 20px;">
+            <div style="font-size: 14px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 8px;">
+              <i data-lucide="shield-check" style="width: 16px; height: 16px;"></i> 2. Cơ Chế Đối Soát Human-in-the-Loop 100%
+            </div>
+            <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">
+              Khác với AI thông thường dễ sinh ảo giác (hallucination), hệ thống cung cấp bảng đối soát trực quan trước/sau làm sạch, cho phép người dùng click sửa trực tiếp từng ô trước khi khóa duyệt.
+            </p>
+          </div>
+
+          <div style="background: var(--card-bg); border: 1px solid var(--line-border); border-radius: 14px; padding: 16px 20px;">
+            <div style="font-size: 14px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 8px;">
+              <i data-lucide="file-check" style="width: 16px; height: 16px;"></i> 3. Chuẩn Mực Báo Cáo: Facts vs Inference
+            </div>
+            <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">
+              Tách bạch rõ rệt giữa [Số liệu trong tài liệu – Document Facts] và [Suy luận chiến lược – Agent Inference], giúp tài liệu đạt độ tin cậy tuyệt đối trong kiểm toán và hội đồng quản trị.
+            </p>
+          </div>
+
+          <div style="background: var(--card-bg); border: 1px solid var(--line-border); border-radius: 14px; padding: 16px 20px;">
+            <div style="font-size: 14px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 8px;">
+              <i data-lucide="download" style="width: 16px; height: 16px;"></i> 4. Xuất Bản Đa Định Dạng Trọn Gói (.DOCX, .HTML, PDF)
+            </div>
+            <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.5;">
+              Xuất tệp Word (.docx) kèm biểu đồ nhúng sắc nét để chỉnh sửa, tệp Web HTML tương tác độc lập hoặc in PDF điều hành chỉ với 1 cú click.
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 8px;">
+            <button class="btn-primary" onclick="enterWorkbench(1)" style="padding: 10px 20px; font-size: 13px;">
+              Vào Quy Trình Phân Tích Ngay &rarr;
+            </button>
+            <button class="btn-secondary" onclick="openContactPage()" style="padding: 10px 20px; font-size: 13px;">
+              Liên Hệ Mai Thảo Vi
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- DEDICATED CONTACT SCREEN (TRANG LIÊN HỆ - EXACT MATCH UI)  -->
+  <!-- ========================================================= -->
+  <div id="contact-screen" class="page-screen" style="display: none;">
+    <header class="page-header">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <button class="btn-secondary" onclick="enterWorkbench(1)" style="padding: 5px 12px; font-size: 12px;">
+          <i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i> Về Bàn Làm Việc
+        </button>
+        <span style="font-size: 16px; font-weight: 850; color: var(--text-main);">
+          🏛 KTCM <span style="color: var(--primary);">AI Analytics Studio</span>
+        </span>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <button class="btn-secondary" onclick="openAboutPage()" style="padding: 5px 12px; font-size: 12px;">
+          Giới Thiệu Nền Tảng
+        </button>
+        <button onclick="toggleTheme()" class="taskbar-circle-btn" title="Sáng / Tối">
+          <i data-lucide="moon" style="width: 14px; height: 14px;"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="page-container">
+      <div class="contact-grid">
+        <!-- Left: Contact Details (Exact match to image 2) -->
+        <div>
+          <span style="font-size: 11px; font-weight: 800; color: var(--primary); letter-spacing: 0.05em; text-transform: uppercase;">
+            LIÊN HỆ HỢP TÁC
+          </span>
+          <h1 style="font-size: 28px; font-weight: 850; color: var(--text-main); line-height: 1.3; margin: 8px 0 12px;">
+            Kết Nối Trực Tiếp Với Đội Ngũ Của Chúng Tôi
+          </h1>
+          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;">
+            Bạn đang muốn tối ưu quy trình báo cáo hoặc xây dựng công cụ AI phân tích dữ liệu riêng cho doanh nghiệp? Hãy liên hệ ngay qua các kênh dưới đây.
+          </p>
+
+          <div class="contact-card-info">
+            <div class="contact-profile-box">
+              <div class="contact-avatar-circle">
+                MV
+              </div>
+              <div>
+                <h2 style="font-size: 17px; font-weight: 850; color: var(--text-main); margin: 0;">
+                  Mai Thảo Vi <span style="font-size: 13px; font-weight: 600; color: var(--text-muted);">(Founder &amp; CEO)</span>
+                </h2>
+                <div style="font-size: 12px; color: var(--primary); font-weight: 700; margin-top: 3px;">
+                  Công ty Giải pháp Dữ liệu &amp; AI KTCM
+                </div>
+              </div>
+            </div>
+
+            <!-- Hotline / Zalo Item -->
+            <a href="tel:08690830**" class="contact-channel-item" title="Bấm để gọi hotline ngay">
+              <div class="contact-channel-icon">
+                <i data-lucide="phone-call" style="width: 18px; height: 18px;"></i>
+              </div>
+              <div>
+                <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Hotline / Zalo tư vấn 24/7</div>
+                <div style="font-size: 15px; font-weight: 800; color: var(--primary); margin-top: 2px;">0869.083.0**</div>
+              </div>
+            </a>
+
+            <!-- Email Item -->
+            <a href="mailto:chulonbuonba@gmail.com" class="contact-channel-item" title="Bấm để gửi email">
+              <div class="contact-channel-icon">
+                <i data-lucide="mail" style="width: 18px; height: 18px;"></i>
+              </div>
+              <div>
+                <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Email liên hệ công việc</div>
+                <div style="font-size: 13.5px; font-weight: 750; color: var(--text-main); margin-top: 2px;">chulonbuonba@gmail.com</div>
+              </div>
+            </a>
+
+            <!-- Office Item -->
+            <div class="contact-channel-item">
+              <div class="contact-channel-icon">
+                <i data-lucide="map-pin" style="width: 18px; height: 18px;"></i>
+              </div>
+              <div>
+                <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Văn phòng đại diện</div>
+                <div style="font-size: 12.5px; font-weight: 700; color: var(--text-main); margin-top: 2px;">Tòa nhà KTCM Studio, TP. Hà Nội &amp; TP. Hồ Chí Minh</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Consultation Form (Exact match to image 2) -->
+        <div class="contact-form-card">
+          <h2 style="font-size: 20px; font-weight: 850; color: var(--text-main); margin-bottom: 4px;">
+            Gửi Yêu Cầu Tư Vấn &amp; Demo Giải Pháp
+          </h2>
+          <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">
+            Để lại thông tin bên dưới, chúng tôi sẽ liên hệ lại trong vòng 30 phút làm việc.
+          </p>
+
+          <form id="contact-form" onsubmit="handleContactSubmit(event)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+              <div>
+                <label class="field-label" style="font-size: 11.5px; font-weight: 750;">HỌ VÀ TÊN *</label>
+                <input type="text" id="contact-name" class="custom-input" placeholder="VD: Trần Minh Tuấn" required>
+              </div>
+              <div>
+                <label class="field-label" style="font-size: 11.5px; font-weight: 750;">SỐ ĐIỆN THOẠI / ZALO *</label>
+                <input type="text" id="contact-phone" class="custom-input" placeholder="VD: 0987 654 321" required>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+              <div>
+                <label class="field-label" style="font-size: 11.5px; font-weight: 750;">EMAIL DOANH NGHIỆP</label>
+                <input type="email" id="contact-email" class="custom-input" placeholder="tenban@congty.vn">
+              </div>
+              <div>
+                <label class="field-label" style="font-size: 11.5px; font-weight: 750;">QUY MÔ / LĨNH VỰC</label>
+                <select id="contact-industry" class="custom-select">
+                  <option value="Bán lẻ / Thương mại điện tử">Thương mại điện tử / Bán lẻ</option>
+                  <option value="Sản xuất & Phân phối">Sản xuất &amp; Phân phối</option>
+                  <option value="Dịch vụ & Tài chính">Dịch vụ &amp; Tài chính</option>
+                  <option value="Công nghệ & Viễn thông">Công nghệ &amp; Viễn thông</option>
+                  <option value="Khác">Lĩnh vực khác</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 18px;">
+              <label class="field-label" style="font-size: 11.5px; font-weight: 750;">NHU CẦU PHÂN TÍCH DỮ LIỆU CỦA BẠN</label>
+              <textarea id="contact-demand" class="custom-textarea" rows="3" placeholder="Mô tả ngắn gọn loại dữ liệu bạn đang có (Excel, CRM, ERP...) và mục tiêu muốn AI hỗ trợ..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; padding: 12px; font-size: 13.5px; font-weight: 800;">
+              Gửi Yêu Cầu Tư Vấn &amp; Báo Giá &rarr;
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- FLOATING HOTLINE CALLING WIDGET (EXACT MATCH IMAGE 2)     -->
+  <!-- ========================================================= -->
+  <a href="tel:08690830**" class="floating-hotline-widget" title="Bấm để gọi ngay Hotline tư vấn 24/7">
+    <div class="hotline-call-btn">
+      <i data-lucide="phone-call" style="width: 22px; height: 22px;"></i>
+    </div>
+    <div class="hotline-pill-badge">
+      <span class="hotline-label">HOTLINE TƯ VẤN 24/7</span>
+      <span class="hotline-number">0869.083.0**</span>
+    </div>
+  </a>
+
+  <script src="app.js"></script>
+</body>
+</html>
